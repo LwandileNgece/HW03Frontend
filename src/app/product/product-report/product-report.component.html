@@ -1,1 +1,37 @@
-<p>product-report works!</p>
+<div class="product-report-container">
+    <h2>Product Reports</h2>
+    <div class="charts-wrapper">
+      <div class="chart-container">
+        <h3>Product Count by Brand</h3>
+        <canvas id="brandChart"></canvas>
+      </div>
+  
+      <div class="chart-container">
+        <h3>Product Count by Product Type</h3>
+        <canvas id="productTypeChart"></canvas>
+      </div>
+    </div>
+  
+    <mat-accordion class="accordion-wrapper">
+        <mat-expansion-panel *ngFor="let brand of activeProductsReportData">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ brand.brand }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="product-types-container">
+            <div class="product-type" *ngFor="let productType of brand.productTypes">
+              <h4>{{ productType.productType }}</h4>
+              <div class="products-container">
+                <div *ngFor="let product of productType.brands" class="product">
+                  <p>{{ product.name }} - ${{ product.price }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      
+      
+  </div>
+  

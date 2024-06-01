@@ -13,6 +13,6 @@ export interface Product {
     brandId: number;
     image: string;
     // Navigation properties
-    productType: ProductType;
-    brand: Brand;
+    // productType: ProductType;
+    // brand: Brand;
 }
