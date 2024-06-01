@@ -11,6 +11,7 @@ import { RegisterComponent } from './authentication/register/register.component'
 import { ProductViewComponent } from './product/product-view/product-view.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { ProductReportComponent } from './product/product-report/product-report.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductReportComponent } from './product/product-report/product-report.
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
