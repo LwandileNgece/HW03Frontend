@@ -47,6 +47,16 @@ export class DataService {
   addProduct(product: Product): Observable<Product> {
     return this.httpClient.post<Product>(`${this.apiUrl}Store/addProduct`, product,this.httpOptions);
   }
+  //report
+  productCountByBrand(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}Report/productCountByBrand`,this.httpOptions)
+  }
+  productCountByProductType(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}Report/productCountByProductType`,this.httpOptions)
+  }
+  activeProductsReport(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}Report/activeProductsReport`,this.httpOptions)
+  }
 }
 
 

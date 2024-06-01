@@ -14,6 +14,7 @@ import { ProductReportComponent } from './product/product-report/product-report.
 import { RouterModule } from '@angular/router';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
