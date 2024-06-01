@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'product-view', component:ProductViewComponent},
   { path: 'product-report', component:ProductReportComponent},
   { path: 'add-product', component:AddProductComponent},
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

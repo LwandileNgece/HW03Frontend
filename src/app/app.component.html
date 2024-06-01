@@ -1,4 +1,12 @@
-
-
-
-<router-outlet />
+<div *ngIf="isLoginOrRegisterPage(); else mainContent">
+    <router-outlet></router-outlet>
+  </div>
+  <ng-template #mainContent>
+    <div class="main-container">
+      <app-side-menu></app-side-menu>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ng-template>
+  

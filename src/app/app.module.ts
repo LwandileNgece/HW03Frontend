@@ -12,6 +12,7 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { ProductReportComponent } from './product/product-report/product-report.component';
 import { RouterModule } from '@angular/router';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     RegisterComponent,
     ProductViewComponent,
     AddProductComponent,
-    ProductReportComponent
+    ProductReportComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,
