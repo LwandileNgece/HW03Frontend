@@ -1,3 +1,5 @@
+import { ProductType } from "./ProductType";
+import { Brand } from "./Brand";
 export interface Product {
     productId: number;
     name: string;
@@ -10,4 +12,7 @@ export interface Product {
     productTypeId: number;
     brandId: number;
     image: string;
+    // Navigation properties
+    productType: ProductType;
+    brand: Brand;
 }

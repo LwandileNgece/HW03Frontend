@@ -1,10 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DataService } from '../../services/data.service';
+import { Product } from '../../shared/Product';
 
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
-  styleUrl: './product-view.component.scss'
+  styleUrls: ['./product-view.component.scss']
 })
-export class ProductViewComponent {
+export class ProductViewComponent implements OnInit {
+  productForm: FormGroup;
+  products: Product[] = [];
 
+  constructor(private formBuilder: FormBuilder, private dataService: DataService) {
+    this.productForm = this.formBuilder.group({
+      searchText: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
+    this.dataService.getAllProducts().subscribe(
+      (data: Product[]) => {
+        this.products = data;
+      },
+      error => {
+        console.log('Error fetching products:', error);
+      }
+    );
+  }
 }

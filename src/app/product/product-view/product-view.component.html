@@ -1,1 +1,32 @@
-<p>product-view works!</p>
+<div class="product-view-container">
+    <h2 class="title">Product View</h2>
+  
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <input type="text" placeholder="Search..." formControlName="searchText" />
+    </div>
+  
+    <!-- Product Table -->
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Brand</th>
+          <th>Product Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+            <td><img [src]="'assets/' + product.image" alt="Product Image" /></td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency: 'USD': 'symbol':'1.2-2' }}</td>
+            <td>{{ product.brandId }}</td>
+            <td>{{ product.productTypeId }}</td>
+            <td>{{ product.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
