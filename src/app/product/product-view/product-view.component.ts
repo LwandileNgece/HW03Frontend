@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { Product } from '../../shared/Product';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-product-view',
@@ -39,12 +40,23 @@ export class ProductViewComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.displayedProducts = this.products.filter(product =>
-      Object.values(product).some(val => val?.toString().toLowerCase().includes(this.searchText.toLowerCase()))
-    );
-    this.currentPage = 1;
-    this.updateDisplayedProducts();
+    const searchTextControl = this.productForm.get('searchText');
+    if (searchTextControl) {
+      const searchText = searchTextControl.value.toLowerCase();
+  
+      this.displayedProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(searchText) ||
+        product.price.toString().toLowerCase().includes(searchText) ||
+        // product.brandId.toLowerCase().includes(searchText) ||
+        // product.productTypeId.toLowerCase().includes(searchText) ||
+        product.description.toLowerCase().includes(searchText)
+      );
+  
+      this.currentPage = 1;
+      this.updateDisplayedProducts();
+    }
   }
+  
 
   sortBy(key: keyof Product): void {
     this.displayedProducts = this.displayedProducts.sort((a, b) => {
@@ -68,6 +80,8 @@ export class ProductViewComponent implements OnInit {
   updateDisplayedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
+  
+    // Slice the displayed products based on the current page and page size
     this.displayedProducts = this.displayedProducts.slice(startIndex, endIndex);
   }
 

@@ -3,8 +3,10 @@
 
   <!-- Filter Section -->
   <div class="filter-section">
-    <input type="text" placeholder="Search..." formControlName="searchText" (input)="applyFilter()" />
-  </div>
+    <form [formGroup]="productForm">
+      <input type="text" placeholder="Search..." formControlName="searchText" (input)="applyFilter()" />
+    </form>
+  </div>  
 
   <!-- Product Table -->
   <table class="product-table">
@@ -41,9 +43,6 @@
       <span *ngIf="getPageNumbers().length > 0">
         Showing items {{ (currentPage - 1) * pageSize + 1 }}-{{ currentPage * pageSize < displayedProducts.length ? currentPage * pageSize : displayedProducts.length }} of {{ products.length }}
       </span>
-      <!-- <button *ngFor="let pageNumber of getPageNumbers()" (click)="goToPage(pageNumber)" [class.active]="pageNumber === currentPage">
-        {{ pageNumber }}
-      </button> -->
     </div>
   </div>
 </div>
