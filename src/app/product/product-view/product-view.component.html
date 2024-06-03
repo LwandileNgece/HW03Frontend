@@ -25,8 +25,8 @@
         <td><img [src]="product.image" alt="Product Image" /></td>
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency: 'USD': 'symbol':'1.2-2' }}</td>
-        <td>{{ product.brandId }}</td>
-        <td>{{ product.productTypeId }}</td>
+        <td>{{ getBrandName(product.brandId) }}</td>
+        <td>{{ getProductTypeName(product.productTypeId) }}</td>
         <td>{{ product.description }}</td>
       </tr>
     </tbody>

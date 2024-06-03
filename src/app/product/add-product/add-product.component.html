@@ -1,32 +1,42 @@
-<form [formGroup]="addProductForm" (ngSubmit)="onSubmit()" class="add-product-form">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="text" id="price" formControlName="price" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="brandId">Brand:</label>
-      <select id="brandId" formControlName="brandId" class="form-control">
-        <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.name }}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="productTypeId">Product Type:</label>
-      <select id="productTypeId" formControlName="productTypeId" class="form-control">
-        <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{ productType.name }}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="image">Upload Image:</label>
-      <input type="file" id="image" formControlName="image" class="form-control-file" (change)="onFileChange($event)">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  
+<div class="add-product-container">
+  <div class="add-product-card">
+    <h2 class="title">Add Product</h2>
+    <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()" class="add-product-form">
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('name')?.invalid && addProductForm.get('name')?.touched }">
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div *ngIf="addProductForm.get('name')?.invalid && addProductForm.get('name')?.touched" class="error-message">Name is required.</div>
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched }">
+        <label for="price">Price:</label>
+        <input type="text" id="price" formControlName="price" class="form-control" (keypress)="validateNumericInput($event)">
+        <div *ngIf="addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched" class="error-message">Price is required and must be a valid number.</div>
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('description')?.invalid && addProductForm.get('description')?.touched }">
+        <label for="description">Description:</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+        <div *ngIf="addProductForm.get('description')?.invalid && addProductForm.get('description')?.touched" class="error-message">Description is required.</div>
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('brandId')?.invalid && addProductForm.get('brandId')?.touched }">
+        <label for="brandId">Brand:</label>
+        <select id="brandId" formControlName="brandId" class="form-control">
+          <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.name }}</option>
+        </select>
+        <div *ngIf="addProductForm.get('brandId')?.invalid && addProductForm.get('brandId')?.touched" class="error-message">Brand is required.</div>
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('productTypeId')?.invalid && addProductForm.get('productTypeId')?.touched }">
+        <label for="productTypeId">Product Type:</label>
+        <select id="productTypeId" formControlName="productTypeId" class="form-control">
+          <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{ productType.name }}</option>
+        </select>
+        <div *ngIf="addProductForm.get('productTypeId')?.invalid && addProductForm.get('productTypeId')?.touched" class="error-message">Product Type is required.</div>
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('image')?.invalid && addProductForm.get('image')?.touched }">
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" formControlName="image" class="form-control-file" (change)="onFileChange($event)">
+        <div *ngIf="addProductForm.get('image')?.invalid && addProductForm.get('image')?.touched" class="error-message">Image is required.</div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="addProductForm.invalid">Submit</button>
+    </form>
+  </div>
+</div>

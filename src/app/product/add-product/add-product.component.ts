@@ -34,7 +34,7 @@ export class AddProductComponent implements OnInit {
       description: ['', Validators.required],
       brandId: ['', Validators.required],
       productTypeId: ['', Validators.required],
-      image: [''] // File upload control
+      image: ['', Validators.required] // File upload control
     });
   }
 
@@ -82,6 +82,14 @@ export class AddProductComponent implements OnInit {
       this.addProductForm.patchValue({
         image: extractedFileName
       });
+    }
+  }
+
+  // Function to allow only numeric input for price field
+  validateNumericInput(event: KeyboardEvent): void {
+    const charCode = event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
     }
   }
 }
