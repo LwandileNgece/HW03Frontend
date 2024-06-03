@@ -44,8 +44,13 @@ export class DataService {
   getAllBrands(): Observable<any>{
     return this.httpClient.get(`${this.apiUrl}Store/GetAllBrands`,this.httpOptions)
   }
-  addProduct(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>(`${this.apiUrl}Store/addProduct`, product,this.httpOptions);
+  // addProduct(product: Product, formData: FormData): Observable<Product> {
+  //   // Append image data to the product object
+  //   formData.append('image', product.image);
+  //   return this.httpClient.post<Product>(`${this.apiUrl}Store/addProduct`, formData, this.httpOptions);
+  // }
+  addProduct(product: Product, formData: FormData): Observable<Product> {
+    return this.httpClient.post<Product>(`${this.apiUrl}Store/addProduct`, formData);
   }
   //report
   productCountByBrand(): Observable<any>{

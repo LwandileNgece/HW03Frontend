@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { Brand } from '../../shared/Brand';
 import { ProductType } from '../../shared/ProductType';
@@ -14,11 +17,13 @@ export class AddProductComponent implements OnInit {
   addProductForm!: FormGroup;
   brands: Brand[] = [];
   productTypes: ProductType[] = [];
+  selectedFile: File | null = null;  // Variable to store the selected file
 
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +39,7 @@ export class AddProductComponent implements OnInit {
       description: ['', Validators.required],
       brandId: ['', Validators.required],
       productTypeId: ['', Validators.required],
-      image: ['', Validators.required] // File upload control
+      image: [null, Validators.required]
     });
   }
 
@@ -53,39 +58,38 @@ export class AddProductComponent implements OnInit {
   onSubmit(): void {
     if (this.addProductForm.valid) {
       const product = this.addProductForm.value;
-      this.dataService.addProduct(product).subscribe(
-        newProduct => {
-          this.router.navigate(['/product-view']);
-          alert(`${newProduct.name} created successfully`);
-        },
-        error => {
-          console.error('Error adding product:', error);
-          alert('Failed to add product. Please try again.');
-        }
-      );
+      if (this.selectedFile) {
+        // Prepare FormData to send image file along with product data
+        const formData = new FormData();
+        formData.append('image', this.selectedFile);
+        formData.append('name', product.name);
+        formData.append('price', product.price);
+        formData.append('description', product.description);
+        formData.append('brandId', product.brandId);
+        formData.append('productTypeId', product.productTypeId);
+
+        this.dataService.addProduct(product, formData).subscribe(
+          newProduct => {
+            this.router.navigate(['/product-view']);
+            alert(`${newProduct.name} created successfully`);
+          },
+          error => {
+            console.error('Error adding product:', error);
+            alert('Failed to add product. Please try again.');
+          }
+        );
+      } else {
+        alert('Please select an image.');
+      }
     } else {
       alert('Please fill all required fields correctly.');
     }
   }
 
   onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const fileName = file.name;
-      const extension = fileName.split('.').pop().toLowerCase();
-  
-      // Extract only the file name and extension from the fake path
-      const fakePathParts = fileName.split('\\');
-      const extractedFileName = fakePathParts[fakePathParts.length - 1];
-  
-      // Update the form control value with the extracted file name
-      this.addProductForm.patchValue({
-        image: extractedFileName
-      });
-    }
+    this.selectedFile = event.target.files[0];  // Store the selected file
   }
 
-  // Function to allow only numeric input for price field
   validateNumericInput(event: KeyboardEvent): void {
     const charCode = event.charCode;
     if (charCode < 48 || charCode > 57) {
