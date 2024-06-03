@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let product of displayedProducts">
-        <td><img [src]="'C:\\Programs\\2024\\u22552792_INF354_HW03\\U22552792_INF354_HW03_Backend\\U22552792_INF354_HW03_Backend\\wwwroot\\images\\' + product.image" alt="Product Image" /></td>
+        <td><img [src]="'https://localhost:7012/' + product.image" alt="Product Image" /></td>
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency: 'USD': 'symbol':'1.2-2' }}</td>
         <td>{{ getBrandName(product.brandId) }}</td>
