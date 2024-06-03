@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { User } from '../../shared/User';
 
@@ -12,11 +12,13 @@ import { User } from '../../shared/User';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -24,10 +26,17 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
+    // Check if there's a message in the router state
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state && navigation.extras.state['message']) {
+      this.successMessage = navigation.extras.state['message'];
+    }
   }
 
-  loginUser() {
+  loginUser(): void {
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched(); // Mark all controls as touched to trigger validation messages
       return;
     }
 
@@ -47,7 +56,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  navigateToRegister() {
+  navigateToRegister(): void {
     this.router.navigate(['/register']);
   }
 }

@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
     this.dataService.registerUser(user).subscribe(
       response => {
         this.router.navigate(['/login']);
+        alert('Registered successfully.');
       },
       error => {
         this.errorMessage = 'Registration failed. Please try again later.';
