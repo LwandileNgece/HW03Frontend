@@ -1,6 +1,6 @@
 <div class="add-product-container">
   <div class="add-product-card">
-    <h2 class="title" style="text-align: center;">Add Product</h2>
+    <h2 class="title">Add Product</h2>
     <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()" class="add-product-form">
       <div class="input-group" [ngClass]="{ 'has-error': addProductForm.get('name')?.invalid && addProductForm.get('name')?.touched }">
         <label for="name">Name:</label>
